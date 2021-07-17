@@ -8,7 +8,7 @@ rt-smart中，APP无法直接访问硬件寄存器，必须通过驱动程序来
 而APP和内核是隔离的，APP无法直接调用内核中驱动程序的函数。
 APP使用驱动的流程如下图所示：
 
-![001_rtt_app_driver](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\001_rtt_app_driver.png)
+![001_rtt_app_driver](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\001_rtt_app_driver.png)
 
 在smart系统中，app是无法直接访问硬件的，而是通过系统提供的一套io接口来对硬件设备进行操作的（是在应用程序看来是这样）。通过一整套标准的接口来操作硬件。
 
@@ -27,7 +27,7 @@ APP使用驱动的流程如下图所示：
 2.static rt_err_t imx6ull_elcd_control(rt_device_t device, int cmd, void *args)
 ```
 
-![02](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\02.png)
+![02](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\02.png)
 
 ## 3.来分析imx6ull_elcd_init（）
 
@@ -37,20 +37,20 @@ APP使用驱动的流程如下图所示：
 
 2.利用 **ELCDIF_RgbModeInit(elcd_dev->config->ELCDIF, &lcd_config);ELCDIF_RgbModeStart(elcd_dev->config->ELCDIF);**；来配置相应的lcd参数，比如屏幕的宽，高，bbp等
 
-![03](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\03.png)
+![03](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\03.png)
 
 ### 4.分析int rt_hw_elcd_init(void)
 
-![05](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\05.jpg)
+![05](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\05.jpg)
 
 ​                       
 
 ​                          ![09](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\09.jpg)   
 ​                           所以这个宏定义的值#define PV_OFFSET 0xc0000000 是0xc0000000
 
-​                                                                     ![04](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\04.png)
+​                                                                     ![04](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\04.png)
 
-![06](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\06.png)
+![06](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\06.png)
 
 
 
@@ -60,5 +60,5 @@ APP使用驱动的流程如下图所示：
 
 frambuffer是内核态的地址，此时用户态不能直接访问的，如果要访问该怎么办？此时应用了一个共享内存页面的特性，将一块内核态的内存与用户态的内存进行共享，此时访问就可以正常进行了。
 
-![08](D:\workspace\git\smartwork-takenodt\takenodt\lcd\pic\08.png)
+![08](D:\workspace\git\smartwork-takenodt\takenode-6ul\lcd\pic\08.png)
 
